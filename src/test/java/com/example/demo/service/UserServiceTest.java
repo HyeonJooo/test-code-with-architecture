@@ -15,9 +15,11 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 import org.springframework.test.context.jdbc.SqlGroup;
 
+import com.example.demo.exception.CertificationCodeNotMatchedException;
 import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.UserStatus;
 import com.example.demo.model.dto.UserCreateDto;
+import com.example.demo.model.dto.UserUpdateDto;
 import com.example.demo.repository.UserEntity;
 
 @SpringBootTest
@@ -96,6 +98,57 @@ public class UserServiceTest {
 		//then
 		assertThat(result.getId()).isNotNull();
 		assertThat(result.getStatus()).isEqualTo(UserStatus.PENDING);
-		//assertThat(result.getCertificationCode()).isEqualTo("T.T");
+		//assertThat(result.getCertificationCode()).isEqualTo("T.T"); //FIXME
+	}
+
+	@Test
+	void userUpdateDto를_이용하여_유저를_수정할_수_있다() {
+		//given
+		UserUpdateDto userUpdateDto = UserUpdateDto.builder()
+			.address("Incheon")
+			.nickname("test-nickname-n")
+			.build();
+
+		//when
+		userService.update(1, userUpdateDto);
+
+		//then
+		UserEntity userEntity = userService.getById(1);
+		assertThat(userEntity.getId()).isNotNull();
+		assertThat(userEntity.getAddress()).isEqualTo("Incheon");
+		assertThat(userEntity.getNickname()).isEqualTo("test-nickname-n");
+	}
+
+	@Test
+	void user를_로그인_시키면_마지막_로그인_시간이_변경된다() {
+		//given
+		//when
+		userService.login(1);
+
+		//then
+		UserEntity userEntity = userService.getById(1);
+		assertThat(userEntity.getLastLoginAt()).isGreaterThan(0L);
+		// assertThat(userEntity.getLastLoginAt()).isEqualTo(""); //FIXME
+	}
+
+	@Test
+	void PENDING_상태의_사용자는_인증코드로_ACTIVE_시킬_수_있다() {
+		//given
+		//when
+		userService.verifyEmail(2, "aaaaaa-aaaa-aaa-aaaaaaaaaaab");
+
+		//then
+		UserEntity userEntity = userService.getById(2);
+		assertThat(userEntity.getStatus()).isEqualTo(UserStatus.ACTIVE);
+	}
+
+	@Test
+	void PENDING_상태의_사용자는_잘못된_인증코드를_받으면_에러를_던진다() {
+		//given
+		//when
+		//then
+		assertThatThrownBy(() -> {
+			userService.verifyEmail(2, "aaaaaa-aaaa-aaa-aaaaaaaaaaac");
+		}).isInstanceOf(CertificationCodeNotMatchedException.class);
 	}
 }
