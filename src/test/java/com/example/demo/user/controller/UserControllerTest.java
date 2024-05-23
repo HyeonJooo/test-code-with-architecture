@@ -17,7 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.example.demo.user.domain.UserStatus;
 import com.example.demo.user.domain.UserUpdate;
 import com.example.demo.user.infrastructure.UserEntity;
-import com.example.demo.user.infrastructure.UserRepository;
+import com.example.demo.user.infrastructure.UserJpaRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @SpringBootTest
@@ -33,7 +33,7 @@ public class UserControllerTest {
 	private MockMvc mockMvc;
 
 	@Autowired
-	private UserRepository userRepository;
+	private UserJpaRepository userJpaRepository;
 
 	private final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -61,7 +61,7 @@ public class UserControllerTest {
 				.queryParam("certificationCode", "aaaaaa-aaaa-aaa-aaaaaaaaaaab"))
 			.andExpect(status().isFound());
 
-		UserEntity userEntity = userRepository.findById(2L).orElseThrow();
+		UserEntity userEntity = userJpaRepository.findById(2L).orElseThrow();
 		assertThat(userEntity.getStatus()).isEqualTo(UserStatus.ACTIVE);
 	}
 
