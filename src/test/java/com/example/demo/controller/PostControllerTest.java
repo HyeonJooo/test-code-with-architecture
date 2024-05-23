@@ -13,7 +13,7 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.example.demo.model.dto.PostUpdateDto;
+import com.example.demo.post.domain.PostUpdate;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @SpringBootTest
@@ -50,13 +50,13 @@ public class PostControllerTest {
 
 	@Test
 	void 사용자는_게시물을_수정할_수_있다() throws Exception {
-		PostUpdateDto postUpdateDto = PostUpdateDto.builder()
+		PostUpdate postUpdate = PostUpdate.builder()
 			.content("helloworld2")
 			.build();
 
 		mockMvc.perform(put("/api/posts/1")
 				.contentType(MediaType.APPLICATION_JSON)
-				.content(objectMapper.writeValueAsString(postUpdateDto)))
+				.content(objectMapper.writeValueAsString(postUpdate)))
 			.andExpect(status().isOk())
 			.andExpect(jsonPath("$.id").value(1))
 			.andExpect(jsonPath("$.content").value("helloworld2"))

@@ -9,9 +9,10 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
 
-import com.example.demo.model.dto.PostCreateDto;
-import com.example.demo.model.dto.PostUpdateDto;
-import com.example.demo.repository.PostEntity;
+import com.example.demo.post.domain.PostCreate;
+import com.example.demo.post.domain.PostUpdate;
+import com.example.demo.post.infrastructure.PostEntity;
+import com.example.demo.post.service.PostService;
 
 @SpringBootTest
 @TestPropertySource("classpath:test-application.properties")
@@ -36,15 +37,15 @@ public class PostServiceTest {
 	}
 
 	@Test
-	void postCreateDto_를_사용하여_게시물을_생성할_수_있다() {
+	void postCreate_를_사용하여_게시물을_생성할_수_있다() {
 		//given
-		PostCreateDto postCreateDto = PostCreateDto.builder()
+		PostCreate postCreate = PostCreate.builder()
 			.writerId(1)
 			.content("foobar")
 			.build();
 
 		//when
-		PostEntity result = postService.create(postCreateDto);
+		PostEntity result = postService.create(postCreate);
 
 		//then
 		assertThat(result.getId()).isNotNull();
@@ -53,14 +54,14 @@ public class PostServiceTest {
 	}
 
 	@Test
-	void postUpdateDto를_사용하여_게시물을_수정할_수_있다() {
+	void postUpdate를_사용하여_게시물을_수정할_수_있다() {
 		//given
-		PostUpdateDto postUpdateDto = PostUpdateDto.builder()
+		PostUpdate postUpdate = PostUpdate.builder()
 			.content("foo bar update")
 			.build();
 
 		//when
-		postService.update(1, postUpdateDto);
+		postService.update(1, postUpdate);
 
 		//then
 		PostEntity result = postService.getById(1);

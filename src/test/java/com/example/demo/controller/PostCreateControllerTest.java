@@ -13,7 +13,7 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.example.demo.model.dto.PostCreateDto;
+import com.example.demo.post.domain.PostCreate;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @SpringBootTest
@@ -31,14 +31,14 @@ public class PostCreateControllerTest {
 	private final ObjectMapper objectMapper = new ObjectMapper();
 	@Test
 	void 사용자는_게시물을_작성할_수_있다() throws Exception {
-		PostCreateDto postCreateDto = PostCreateDto.builder()
+		PostCreate postCreate = PostCreate.builder()
 			.writerId(1)
 			.content("hello")
 			.build();
 
 		mockMvc.perform(post("/api/posts")
 				.contentType(MediaType.APPLICATION_JSON)
-				.content(objectMapper.writeValueAsString(postCreateDto)))
+				.content(objectMapper.writeValueAsString(postCreate)))
 			.andExpect(status().isCreated())
 			.andExpect(jsonPath("$.id").value(1))
 			.andExpect(jsonPath("$.content").value("hello"))

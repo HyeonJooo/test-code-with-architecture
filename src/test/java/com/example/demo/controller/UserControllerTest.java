@@ -14,10 +14,10 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.example.demo.model.UserStatus;
-import com.example.demo.model.dto.UserUpdateDto;
-import com.example.demo.repository.UserEntity;
-import com.example.demo.repository.UserRepository;
+import com.example.demo.user.domain.UserStatus;
+import com.example.demo.user.domain.UserUpdate;
+import com.example.demo.user.infrastructure.UserEntity;
+import com.example.demo.user.infrastructure.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @SpringBootTest
@@ -86,7 +86,7 @@ public class UserControllerTest {
 
 	@Test
 	void 사용자는_내_정보를_수정할_수_있다() throws Exception {
-		UserUpdateDto userUpdateDto = UserUpdateDto.builder()
+		UserUpdate userUpdate = UserUpdate.builder()
 				.nickname("testNickname1-n")
 				.address("Pangyo")
 				.build();
@@ -94,7 +94,7 @@ public class UserControllerTest {
 		mockMvc.perform(put("/api/users/me")
 				.header("EMAIL", "testId1")
 				.contentType(MediaType.APPLICATION_JSON)
-				.content(objectMapper.writeValueAsString(userUpdateDto)))
+				.content(objectMapper.writeValueAsString(userUpdate)))
 			.andExpect(status().isOk())
 			.andExpect(jsonPath("$.id").value(1))
 			.andExpect(jsonPath("$.email").value("testId1"))
