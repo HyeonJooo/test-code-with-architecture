@@ -10,14 +10,14 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CertificationService {
 
-	private final MailSender mailSender;
+	private final MailSender mailSenderImpl;
 
 	public void send(String email, long id, String certificationCode) {
 		String certificationUrl = generateCertificationUrl(id, certificationCode);
 		String title = "Please certify your email address";
 		String content = "Please click the following link to certify your email address: " + certificationUrl;
 
-		mailSender.send(email, title, content);
+		mailSenderImpl.send(email, title, content);
 	}
 
 	private String generateCertificationUrl(long id, String certificationCode) {

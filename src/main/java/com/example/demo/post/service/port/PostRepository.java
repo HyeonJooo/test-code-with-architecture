@@ -4,12 +4,12 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
 
-import com.example.demo.post.infrastructure.PostEntity;
+import com.example.demo.post.domain.Post;
 
 @Repository
 public interface PostRepository {
 
-	Optional<PostEntity> findById(long id);
+	Optional<Post> findById(long id);
 
-	PostEntity save(PostEntity postEntity);
+	Post save(Post post);
 }
