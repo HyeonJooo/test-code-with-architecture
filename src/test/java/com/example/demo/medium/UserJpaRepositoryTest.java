@@ -1,4 +1,4 @@
-package com.example.demo.user.infrastructure;
+package com.example.demo.medium;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -11,6 +11,8 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 
 import com.example.demo.user.domain.UserStatus;
+import com.example.demo.user.infrastructure.UserEntity;
+import com.example.demo.user.infrastructure.UserJpaRepository;
 
 @DataJpaTest
 @TestPropertySource("classpath:test-application.properties")
