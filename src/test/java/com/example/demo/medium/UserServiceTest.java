@@ -21,7 +21,7 @@ import com.example.demo.user.domain.User;
 import com.example.demo.user.domain.UserStatus;
 import com.example.demo.user.domain.UserCreate;
 import com.example.demo.user.domain.UserUpdate;
-import com.example.demo.user.service.UserService;
+import com.example.demo.user.service.UserServiceImpl;
 
 @SpringBootTest
 @TestPropertySource("classpath:test-application.properties")
@@ -32,7 +32,7 @@ import com.example.demo.user.service.UserService;
 public class UserServiceTest {
 
 	@Autowired
-	private UserService userService;
+	private UserServiceImpl userService;
 
 	@MockBean //test를 실행할 때 MockBean이 주입돼서 실행된다.
 	private JavaMailSender javaMailSender;

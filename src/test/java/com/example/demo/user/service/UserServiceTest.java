@@ -18,13 +18,13 @@ import com.example.demo.user.domain.UserUpdate;
 
 public class UserServiceTest {
 
-	private UserService userService;
+	private UserServiceImpl userService;
 
 	@BeforeEach
 	void init() {
 		FakeMailSender fakeMailSender = new FakeMailSender();
 		FakeUserRepository fakeUserRepository = new FakeUserRepository();
-		this.userService = UserService.builder()
+		this.userService = UserServiceImpl.builder()
 				.userRepository(fakeUserRepository)
 				.clockHolder(new TestClockHolder(123123123L))
 				.uuidHolder(new TestUuidHolder("aaaaa-aaa-aaaaaaa"))

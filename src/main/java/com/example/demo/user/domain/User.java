@@ -1,8 +1,5 @@
 package com.example.demo.user.domain;
 
-import java.time.Clock;
-import java.util.UUID;
-
 import com.example.demo.common.domain.exception.CertificationCodeNotMatchedException;
 import com.example.demo.common.service.port.ClockHolder;
 import com.example.demo.common.service.port.UuidHolder;

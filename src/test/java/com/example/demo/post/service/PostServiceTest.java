@@ -16,13 +16,13 @@ import com.example.demo.user.domain.UserStatus;
 
 public class PostServiceTest {
 
-	private PostService postService;
+	private PostServiceImpl postService;
 
 	@BeforeEach
 	void init() {
 		FakePostRepository fakePostRepository = new FakePostRepository();
 		FakeUserRepository fakeUserRepository = new FakeUserRepository();
-		this.postService = PostService.builder()
+		this.postService = PostServiceImpl.builder()
 			.postRepository(fakePostRepository)
 			.userRepository(fakeUserRepository)
 			.clockHolder(new TestClockHolder(1678530673958L))
