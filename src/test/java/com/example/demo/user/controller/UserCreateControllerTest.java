@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 
-import com.example.demo.common.service.port.UuidHolder;
 import com.example.demo.mock.TestContainer;
 import com.example.demo.user.controller.response.UserResponse;
 import com.example.demo.user.domain.UserCreate;
@@ -28,7 +27,7 @@ public class UserCreateControllerTest {
 			.build();
 
 		//when
-		ResponseEntity<UserResponse> result = testContainer.userCreateController.createUser(userCreate);
+		ResponseEntity<UserResponse> result = testContainer.userCreateController.create(userCreate);
 
 		//then
 		assertThat(result.getStatusCode()).isEqualTo(HttpStatusCode.valueOf(201));
